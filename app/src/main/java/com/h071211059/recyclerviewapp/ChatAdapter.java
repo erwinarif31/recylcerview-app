@@ -13,9 +13,14 @@ import java.util.ArrayList;
 public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ChatViewHolder> {
 
     private final ArrayList<Chat> chats;
+    private static ClickListener clickListener;
 
     public ChatAdapter(ArrayList<Chat> chats) {
         this.chats = chats;
+    }
+
+    public void setClickListener(ClickListener clickListener) {
+        ChatAdapter.clickListener = clickListener;
     }
 
     @NonNull
@@ -44,10 +49,15 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ChatViewHolder
         }
 
         public void onBind(Chat chat) {
+            binding.getRoot().setOnClickListener(v -> clickListener.onClick(chat));
             binding.tvName.setText(chat.getName());
             binding.tvChat.setText(chat.getMessages());
             binding.tvTime.setText(chat.getTime());
             binding.ivProfile.setImageResource(chat.getImage());
         }
+    }
+
+    interface ClickListener {
+        void onClick(Chat chat);
     }
 }

@@ -1,13 +1,12 @@
 package com.h071211059.recyclerviewapp;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 
 public class ChatDataSource {
-    public static ArrayList<Chat> chats = genereateChat();
+    public static ArrayList<Chat> chats = generateChat();
 
-    private static ArrayList<Chat> genereateChat() {
+    private static ArrayList<Chat> generateChat() {
         ArrayList<Chat> chats = new ArrayList<>();
         chats.add(new Chat("Lucas Oliveira da Silva", "Hola", "12:00", R.drawable.u1));
         chats.add(new Chat("Joaquín García Pérez", "Buenos días", "12:00", R.drawable.u33));
