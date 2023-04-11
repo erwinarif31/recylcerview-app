@@ -16,21 +16,21 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+        System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAA");
 
         setChatRv();
 
     }
-
     private void setChatRv() {
         binding.rvChat.setLayoutManager(new LinearLayoutManager(this));
         binding.rvChat.addItemDecoration(new DividerItemDecoration(this,
                 DividerItemDecoration.VERTICAL));
-        ChatAdapter adapter = new ChatAdapter(ChatDataSource.chats);
+        UserAdapter adapter = new UserAdapter(UserDataSource.chats);
         adapter.setClickListener(chat -> goToMessage(chat));
         binding.rvChat.setAdapter(adapter);
     }
 
-    private void goToMessage(Chat chat) {
+    private void goToMessage(User chat) {
         Intent intent = new Intent(MainActivity.this, MessageActivity.class);
         intent.putExtra(MessageActivity.EXTRA_CHAT, chat);
         startActivity(intent);

@@ -1,9 +1,10 @@
 package com.h071211059.recyclerviewapp;
 
-import androidx.appcompat.app.AppCompatActivity;
-
+import android.content.Intent;
 import android.os.Bundle;
-import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.h071211059.recyclerviewapp.databinding.ActivityMessageBinding;
 
@@ -17,14 +18,30 @@ public class MessageActivity extends AppCompatActivity {
         binding = ActivityMessageBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        Chat chat = (Chat) getIntent().getParcelableExtra(EXTRA_CHAT);
-        setProfile(chat);
+        User user = (User) getIntent().getParcelableExtra(EXTRA_CHAT);
+        setTopNavbar(user);
+        setMessageRv();
 
-        binding.topNavbar.ivBack.setOnClickListener(v -> finish());
+        binding.topNavbar.getRoot().setOnClickListener(v -> {
+            toProfileActivity(user);
+        });
     }
 
-    private void setProfile(Chat chat) {
+    private void toProfileActivity(User user) {
+        Intent intent = new Intent(this, ProfileActivity.class);
+        intent.putExtra(MessageActivity.EXTRA_CHAT, user);
+        startActivity(intent);
+    }
+
+    private void setMessageRv() {
+        binding.rvMessages.setLayoutManager(new LinearLayoutManager(this));
+        MessageAdapter adapter = new MessageAdapter(MessageDataSource.messages);
+        binding.rvMessages.setAdapter(adapter);
+    }
+
+    private void setTopNavbar(User chat) {
         binding.topNavbar.tvName.setText(chat.getName());
         binding.topNavbar.ivProfile.setImageResource(chat.getImage());
+        binding.topNavbar.ivBack.setOnClickListener(v -> finish());
     }
 }
