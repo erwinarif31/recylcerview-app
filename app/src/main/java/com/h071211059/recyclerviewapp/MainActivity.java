@@ -2,6 +2,7 @@ package com.h071211059.recyclerviewapp;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.DividerItemDecoration;
@@ -16,9 +17,10 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAA");
+//        System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAA");
 
         setChatRv();
+
 
     }
     private void setChatRv() {
@@ -26,13 +28,23 @@ public class MainActivity extends AppCompatActivity {
         binding.rvChat.addItemDecoration(new DividerItemDecoration(this,
                 DividerItemDecoration.VERTICAL));
         UserAdapter adapter = new UserAdapter(UserDataSource.chats);
-        adapter.setClickListener(chat -> goToMessage(chat));
+        adapter.setClickListener(this::goToMessage, this::viewPhoto);
         binding.rvChat.setAdapter(adapter);
     }
 
-    private void goToMessage(User chat) {
-        Intent intent = new Intent(MainActivity.this, MessageActivity.class);
-        intent.putExtra(MessageActivity.EXTRA_CHAT, chat);
+    private void viewPhoto(User user) {
+        Intent intent = new Intent(this, PhotoActivity.class);
+        intent.putExtra(MessageActivity.EXTRA_CHAT, user);
         startActivity(intent);
     }
+
+    private void goToMessage(User user) {
+        Intent intent = new Intent(MainActivity.this, MessageActivity.class);
+        intent.putExtra(MessageActivity.EXTRA_CHAT, user);
+        intent.putExtra("status", user.getStatus());
+        startActivity(intent);
+        System.out.println(user.getStatus().getStatusText());
+    }
+
+
 }

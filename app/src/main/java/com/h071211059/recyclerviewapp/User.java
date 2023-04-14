@@ -28,6 +28,7 @@ public class User implements Parcelable {
         phoneNumber = in.readString();
     }
 
+
     public static final Creator<User> CREATOR = new Creator<User>() {
         @Override
         public User createFromParcel(Parcel in) {
@@ -89,5 +90,6 @@ public class User implements Parcelable {
         parcel.writeString(name);
         parcel.writeInt(image);
         parcel.writeString(phoneNumber);
+        parcel.writeParcelable(status, i);
     }
 }

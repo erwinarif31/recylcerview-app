@@ -13,14 +13,16 @@ import java.util.ArrayList;
 public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ChatViewHolder> {
 
     private static ClickListener clickListener;
+    private static ImageClick imageClickListener;
     private final ArrayList<User> chats;
 
     public UserAdapter(ArrayList<User> chats) {
         this.chats = chats;
     }
 
-    public void setClickListener(ClickListener clickListener) {
+    public void setClickListener(ClickListener clickListener, ImageClick imageClick) {
         UserAdapter.clickListener = clickListener;
+        UserAdapter.imageClickListener = imageClick;
     }
 
     @NonNull
@@ -46,6 +48,10 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ChatViewHolder
         void onClick(User chat);
     }
 
+    interface ImageClick {
+        void onClick(User chat);
+    }
+
     public static class ChatViewHolder extends RecyclerView.ViewHolder {
         private final ItemChatLayoutBinding binding;
 
@@ -63,7 +69,9 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ChatViewHolder
             binding.tvChat.setText(lastMessageText);
             binding.tvTime.setText(lastMessageTime);
             binding.ivProfile.setImageResource(chat.getImage());
-            binding.getRoot().setOnClickListener(v -> clickListener.onClick(chat));
+            binding.clUserChatInfo.setOnClickListener(v -> clickListener.onClick(chat));
+            binding.ivProfile.setOnClickListener(v -> imageClickListener.onClick(chat));
+
         }
     }
 }

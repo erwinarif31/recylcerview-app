@@ -19,17 +19,19 @@ public class MessageActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         User user = (User) getIntent().getParcelableExtra(EXTRA_CHAT);
+        Status status = getIntent().getParcelableExtra("status");
         setTopNavbar(user);
         setMessageRv();
 
         binding.topNavbar.getRoot().setOnClickListener(v -> {
-            toProfileActivity(user);
+            toProfileActivity(user, status);
         });
     }
 
-    private void toProfileActivity(User user) {
+    private void toProfileActivity(User user, Status status) {
         Intent intent = new Intent(this, ProfileActivity.class);
         intent.putExtra(MessageActivity.EXTRA_CHAT, user);
+        intent.putExtra("status", status);
         startActivity(intent);
     }
 
@@ -39,7 +41,7 @@ public class MessageActivity extends AppCompatActivity {
         binding.rvMessages.setAdapter(adapter);
     }
 
-    private void setTopNavbar(User chat) {
+   private void setTopNavbar(User chat) {
         binding.topNavbar.tvName.setText(chat.getName());
         binding.topNavbar.ivProfile.setImageResource(chat.getImage());
         binding.topNavbar.ivBack.setOnClickListener(v -> finish());
