@@ -17,7 +17,7 @@ public class MessageDataSource {
         conversation.add(new Message("Podríamos ir a las 6 PM. ¿Te parece bien?", "10:30 AM", true));
         conversation.add(new Message("Perfecto, nos vemos a las 6 en el cine entonces. ¡Hasta luego!", "10:35 AM", false));
         conversation.add(new Message("¡Hasta luego, nos vemos allí!", "10:40 AM", true));
-        conversation.add(new Message("Bye", "10:49 AM", false));
+        conversation.add(new Message("Adios", "10:49 AM", false));
 
         return conversation;
     }
